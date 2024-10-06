@@ -6,7 +6,8 @@ def safe_divide(numerator, denominator):
         denominator = float(denominator)
         if denominator == 0:
             return "Error: Cannot divide by zero."
-        return f"The result of the division is {numerator / denominator}."
+        # Remove the trailing period from the result message
+        return f"The result of the division is {numerator / denominator}"
     except ValueError:
         return "Error: Please enter numeric values only."
 
