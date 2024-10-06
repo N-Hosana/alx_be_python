@@ -1,41 +1,43 @@
-# library_management.py
-
+# Define the Book class
 class Book:
     """A class representing a book with a title and author."""
+    
     def __init__(self, title, author):
         self.title = title
         self.author = author
         self._is_checked_out = False
 
     def check_out(self):
-        """Mark the book as checked out."""
+        """Marks the book as checked out."""
         if not self._is_checked_out:
             self._is_checked_out = True
             return True
         return False
 
     def return_book(self):
-        """Mark the book as returned (available)."""
+        """Marks the book as returned."""
         if self._is_checked_out:
             self._is_checked_out = False
             return True
         return False
 
     def is_available(self):
-        """Check if the book is available for borrowing."""
+        """Returns whether the book is available to check out."""
         return not self._is_checked_out
 
+# Define the Library class
 class Library:
-    """A class representing a library that manages a collection of books."""
+    """A class to represent a collection of books in a library."""
+    
     def __init__(self):
         self._books = []
 
     def add_book(self, book):
-        """Add a new book to the library."""
+        """Adds a book to the library's collection."""
         self._books.append(book)
 
     def check_out_book(self, title):
-        """Check out a book by title if it is available."""
+        """Checks out a book from the library by title."""
         for book in self._books:
             if book.title == title:
                 if book.check_out():
@@ -46,7 +48,7 @@ class Library:
         print(f"Book titled '{title}' not found in the library.")
 
     def return_book(self, title):
-        """Return a book by title if it is currently checked out."""
+        """Returns a book to the library by title."""
         for book in self._books:
             if book.title == title:
                 if book.return_book():
@@ -57,7 +59,7 @@ class Library:
         print(f"Book titled '{title}' not found in the library.")
 
     def list_available_books(self):
-        """List all books that are available for borrowing."""
+        """Lists all available books in the library."""
         available_books = [book for book in self._books if book.is_available()]
         if available_books:
             for book in available_books:
