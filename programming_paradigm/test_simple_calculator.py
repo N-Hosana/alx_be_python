@@ -1,55 +1,37 @@
-class Book:
-    def __init__(self, title, author):
-        self.title = title
-        self.author = author
-        self._is_checked_out = False
+import unittest
+from simple_calculator import SimpleCalculator
 
-    def check_out(self):
-        if not self._is_checked_out:
-            self._is_checked_out = True
-            return True
-        return False
+class TestSimpleCalculator(unittest.TestCase):
 
-    def return_book(self):
-        if self._is_checked_out:
-            self._is_checked_out = False
-            return True
-        return False
+    def setUp(self):
+        """Set up the SimpleCalculator instance before each test."""
+        self.calc = SimpleCalculator()
 
-    def is_available(self):
-        return not self._is_checked_out
+    def test_addition(self):
+        """Test the addition method."""
+        self.assertEqual(self.calc.add(2, 3), 5)
+        self.assertEqual(self.calc.add(-1, 1), 0)
+        self.assertEqual(self.calc.add(0, 0), 0)
+        self.assertEqual(self.calc.add(-5, -5), -10)
 
-class Library:
-    def __init__(self):
-        self._books = []
+    def test_subtraction(self):
+        """Test the subtraction method."""
+        self.assertEqual(self.calc.subtract(5, 3), 2)
+        self.assertEqual(self.calc.subtract(0, 3), -3)
+        self.assertEqual(self.calc.subtract(-1, -1), 0)
 
-    def add_book(self, book):
-        self._books.append(book)
+    def test_multiplication(self):
+        """Test the multiplication method."""
+        self.assertEqual(self.calc.multiply(2, 3), 6)
+        self.assertEqual(self.calc.multiply(0, 10), 0)
+        self.assertEqual(self.calc.multiply(-1, -1), 1)
 
-    def check_out_book(self, title):
-        for book in self._books:
-            if book.title == title:
-                if book.check_out():
-                    print(f"{title} has been checked out.")
-                else:
-                    print(f"{title} is already checked out.")
-                return
-        print(f"{title} not found in the library.")
+    def test_division(self):
+        """Test the division method, including division by zero."""
+        self.assertEqual(self.calc.divide(6, 3), 2)
+        self.assertEqual(self.calc.divide(10, 2), 5)
+        self.assertIsNone(self.calc.divide(5, 0), "Should return None for division by zero")
+        self.assertEqual(self.calc.divide(-6, -3), 2)
 
-    def return_book(self, title):
-        for book in self._books:
-            if book.title == title:
-                if book.return_book():
-                    print(f"{title} has been returned.")
-                else:
-                    print(f"{title} wasn't checked out.")
-                return
-        print(f"{title} not found in the library.")
-
-    def list_available_books(self):
-        available_books = [book for book in self._books if book.is_available()]
-        if available_books:
-            for book in available_books:
-                print(f"{book.title} by {book.author}")
-        else:
-            print("No books available.")
+if __name__ == '__main__':
+    unittest.main()
